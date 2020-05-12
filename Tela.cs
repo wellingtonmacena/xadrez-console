@@ -1,10 +1,44 @@
 using tabuleiro;
 using xadrez;
 using System;
+using System.Collections.Generic;
 namespace xadrez_console
 {
     class Tela
     {
+        public static void imprimirPartida(PartidaDeXadrez partida)
+        {
+            imprimirTabuleiro(partida.tab);
+            System.Console.WriteLine();
+            imprimirPecasCapturadas(partida);
+            System.Console.WriteLine();
+            System.Console.WriteLine("Turno: " + partida.turno);
+            System.Console.WriteLine("Aguardando Jogada: " + partida.jogadorAtual);
+        }
+
+        public static void imprimirPecasCapturadas(PartidaDeXadrez partida)
+        {
+            System.Console.WriteLine("Pecas capturadas:");
+            System.Console.Write("Brancas: ");
+            imprimirConjunto(partida.pecasCapturadas(Cor.Branca));
+            System.Console.WriteLine();
+            System.Console.Write("Pretas: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            imprimirConjunto(partida.pecasCapturadas(Cor.Preta));
+            Console.ForegroundColor = aux;
+            
+        }
+
+        public static void imprimirConjunto(HashSet<Peca> conjunto)
+        {
+            System.Console.Write("[ ");
+            foreach(Peca item in conjunto)
+            {
+                System.Console.Write(item + " ");
+            }
+            System.Console.WriteLine(" ]");
+        }
         public static void imprimirTabuleiro(Tabuleiro tab)
         {
             for (int vetor = 0; vetor < tab.linhas; vetor++)
@@ -34,9 +68,10 @@ namespace xadrez_console
                     if (posicoesPossiveis[vetor, elemento])
                     {
                         Console.BackgroundColor = fundoAlterado;
-                        
+
                     }
-                    else{
+                    else
+                    {
                         Console.BackgroundColor = fundoOriginal;
                     }
                     imprimirPeca(tab.peca(vetor, elemento));
