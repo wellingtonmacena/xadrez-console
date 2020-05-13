@@ -13,11 +13,19 @@ namespace xadrez_console
             imprimirPecasCapturadas(partida);
             System.Console.WriteLine();
             System.Console.WriteLine("Turno: " + partida.turno);
-            System.Console.WriteLine("Aguardando Jogada: " + partida.jogadorAtual);
-            if(partida.xeque)
+            if (!partida.terminada)
             {
-                System.Console.WriteLine("XEQUE!");
+                System.Console.WriteLine("Aguardando Jogada: " + partida.jogadorAtual);
+                if (partida.xeque)
+                {
+                    System.Console.WriteLine("XEQUE!");
+                }
             }
+            else{
+                System.Console.WriteLine("XEQUEMATE!");
+                System.Console.WriteLine($"Vencedor: {partida.jogadorAtual}");
+            }
+
         }
 
         public static void imprimirPecasCapturadas(PartidaDeXadrez partida)
@@ -31,13 +39,13 @@ namespace xadrez_console
             Console.ForegroundColor = ConsoleColor.Yellow;
             imprimirConjunto(partida.pecasCapturadas(Cor.Preta));
             Console.ForegroundColor = aux;
-            
+
         }
 
         public static void imprimirConjunto(HashSet<Peca> conjunto)
         {
             System.Console.Write("[ ");
-            foreach(Peca item in conjunto)
+            foreach (Peca item in conjunto)
             {
                 System.Console.Write(item + " ");
             }
